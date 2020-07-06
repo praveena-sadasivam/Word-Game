@@ -1,7 +1,4 @@
 from flask import Flask,render_template,request,jsonify
-import requests
-import database
-from logging.handlers import RotatingFileHandler
 from nltk.corpus import wordnet as word_net
 import json
 import random
