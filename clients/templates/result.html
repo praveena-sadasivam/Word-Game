@@ -73,7 +73,7 @@ href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
     color:black;
     font-family: 'Roboto', sans-serif;
     text-align: center;
-
+    background-image: url("https://webneel.com/wallpaper/sites/default/files/images/07-2018/30-black-wallpaper-hd-strips.jpg");
     background-color: currentColor;
   }
   h4 {
@@ -88,7 +88,7 @@ href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
     border-radius: 8px;
   }
   p { margin: 1.375rem 0; 
-    color:black;
+    color:white;
     font-family: "Lucida Console", Courier, monospace;
     font-weight: 30;
     font-size: 100;
@@ -131,6 +131,7 @@ href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
     <div class="container">
         <div class='text-center'>
             <h1>RESULT</h1>
+            <img src="{{url_for('static', filename='images/results.jpg')}}" align="middle" width="100" height="100">
         </div>
             <!-- it will display score onclick -->
         <form name="Form2" class="col-md-6 col-md-offset-3 formfield " onsubmit=" get_score();return false;" required>
@@ -140,63 +141,52 @@ href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
         </form>
         <span class="highlight big" id="score"></span>   
          <!-- it will display correct words  onclick -->
-        <form name="Form2" class="col-md-6 col-md-offset-3 formfield " onsubmit=" get_words();return false;" required>
+        <form name="Form2" class="col-md-6 col-md-offset-3 formfield text-left" onsubmit=" get_words();return false;" required>
             <button align="center" class="btn btn-primary" type="submit">
-                <i class="glyphicon glyphicon-search"></i>ANSWER
+                <i class="glyphicon glyphicon-search"></i>WORDS
               </button>
-        </form>
-         <!-- it will display meaning  onclick -->
-        <div class=text-left id="item1">
-        <span class="link" onclick="javascript:meaning();" id="words"> </span>
-        <p id="meaning"></p>
+            </form>
+        <!-- it will display meaning  onclick -->
+        <button align="center" class="btn btn-primary word_meaning">MEANING
+
+        </button>
+        <div class=text-left >
+          <span id="words"> </span>
         </div>
-        
-    
-    
-  </body>
+      </div>
+    </body>
+      
 
 
 
 
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
       <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <script >
-        function get_score(){
-            $.getJSON("/api/score",function(result){
-                var score =result;
-                $("#score").html(score);
-                console.log(result)
+    function get_score(){
+      $.getJSON("/api/score",function(result){
+        var score =result;
+        $("#score").html(score);
+        console.log(result)
+      });
+    }
 
-            });
-
+    function get_words(){
+      $.getJSON("/api/words",function(result){
+        var words =result;
+        const keys = Object.keys(words);
+        var text = "";
+        var i;
+        for (i = 0; i < keys.length; i++) {
+          text +='<mark>'+ keys[i] +'</mark>'+ '<p class ="meaning">'+words[keys[i]]+'</p>'+"<br><br>";
         }
-        function get_words(){
-            $.getJSON("/api/words",function(result){
-                var words =result;
-                var text = "";
-                var i;
-                for (i = 0; i < words.length; i++) {
-                  text +='<mark>'+ words[i] +'</mark>'+ "<br>";
-                  }
-                  document.getElementById("words").innerHTML = text;
-                
-                console.log(words)
-
-            });
-
-
-        }
-        function meaning(){
-            var words=$('#words').text();
-            $.getJSON("/api/meaning",{"words":words},function(result){
-                var meaning ='<mark>'+result+'<mark/>';
-                $("#meaning").html(meaning);
-                
-                console.log(meaning)
-
-            });
-        }
-    
+        document.getElementById("words").innerHTML = text;
+        console.log(words)
+        $(".meaning").hide();
+        $(".word_meaning").click(function(){
+        $(".meaning").show();
+      });
+    });
+  }
   </script>
-  
-</html>
+  </html>
