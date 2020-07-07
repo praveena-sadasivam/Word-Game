@@ -2,10 +2,13 @@ from flask import Flask,render_template,request,jsonify
 from nltk.corpus import wordnet as word_net
 import json
 import random
+from logging.handlers import RotatingFileHandler
+
 word_dict=dict()
 random_wrd=str()
-correct_word=list()
+correct_word=set()
 score=0
+meaning=dict()
 
 
 # Opening JSON file that has 4 letter english words
@@ -18,6 +21,21 @@ with open('word_dictionary.json', 'r') as openfile:
 app=Flask(__name__,
 template_folder="clients/templates",
 static_folder="clients/static")
+
+file_handler = RotatingFileHandler("error.log", maxBytes=1024 * 1024 * 100)
+app.logger.addHandler(file_handler)
+
+
+@app.errorhandler(500)
+def handle_500_error(exception):
+    app.logger.error(exception)
+    return "Internal Server Error"
+
+@app.errorhandler(404)
+def handle_404_error(exception):
+    app.logger.error(exception)
+    return "Not Found"
+
 
 #function to get random words
 def get_random_word():
@@ -52,10 +70,10 @@ def jumbled_word():
     words=get_jumbled_word()
     jum_word=words[0]
     random_wrd=words[1]
-    correct_word.append(random_wrd)
+    correct_word.add(random_wrd)
     print("jumbled: ",jum_word)
     print("random: ",random_wrd)
-    print("got word")
+    print("sending a jumbled word to webpage")
     return jsonify(jum_word)
 
 #function to check user input
@@ -67,8 +85,8 @@ def check_word():
     answer=answer.split(" ")
     for word in answer:
         if word in json_object:
+            correct_word.add(word)
             score+=1
-            
     return jsonify(score)
 
 #function to return result page
@@ -85,17 +103,19 @@ def get_score():
 # function to return correct word 
 @app.route("/api/words")
 def get_word():
-    print(correct_word)
-    return jsonify(correct_word)
+    for word in correct_word:
+        meaning[word]=word_meaning(word)
 
-#function to display meaning on click
-@app.route("/api/meaning",methods=['GET'])
-def word_meaning():
-    word = request.args.get("words")
+    print(correct_word)
+    return jsonify(meaning)
+
+#function to display meaning
+def word_meaning(word):
+    #word = request.args.get("words")
     print(word)
     syn = word_net.synsets(word)[0]
     meaning=syn.definition()
-    return jsonify(meaning)
+    return meaning
 
 if __name__ == '__main__':
-    app.run(debug=True,port=3000)
+    app.run(port=3000)
