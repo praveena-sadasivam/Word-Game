@@ -41,7 +41,7 @@ def handle_404_error(exception):
 def get_random_word():
     rand_num = random.randint(0,len(json_object)-1)
     rand_word=json_object[rand_num]
-    print("random function")
+    print("getting random word")
     return rand_word
 
 #function to shuffle the target word
@@ -52,7 +52,7 @@ def get_jumbled_word():
    
     # join() method join the elements
     jumbled = ''.join(jubled_word_list)
-    print("jumbled function")
+    print("getting jumbled word")
     return [jumbled,rand_word]
 
 
@@ -60,7 +60,7 @@ def get_jumbled_word():
 #function to get html page
 @app.route("/")
 def get_html():
-    print("html page")
+    print("open web page")
     return render_template("word_game.html")
 
 #function to send target word to web page 
@@ -71,15 +71,15 @@ def jumbled_word():
     jum_word=words[0]
     random_wrd=words[1]
     correct_word.add(random_wrd)
-    print("jumbled: ",jum_word)
-    print("random: ",random_wrd)
+    print("jumbled word: ",jum_word)
+    print("random word: ",random_wrd)
     print("sending a jumbled word to webpage")
     return jsonify(jum_word)
 
 #function to check user input
 @app.route("/api/checker",methods=['GET','POST'])
 def check_word():
-    print("check method")
+    print("checking user input ")
     global score
     answer = request.args.get("answer")
     answer=answer.split(" ")
@@ -105,14 +105,10 @@ def get_score():
 def get_word():
     for word in correct_word:
         meaning[word]=word_meaning(word)
-
-    print(correct_word)
     return jsonify(meaning)
 
 #function to display meaning
 def word_meaning(word):
-    #word = request.args.get("words")
-    print(word)
     syn = word_net.synsets(word)[0]
     meaning=syn.definition()
     return meaning
