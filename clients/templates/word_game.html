@@ -19,6 +19,10 @@ href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
   </script> 
 </head>
 <style>
+  div {
+  margin-bottom: 15px;
+  padding: 4px 12px;
+}
   h1 {
   margin-bottom: 1.375em;
   color:black;
@@ -68,13 +72,17 @@ href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
   transform: translate(-50%, -50%);
   text-align: center;
 }
+.warning {
+  background-color: #ffffcc;
+  border-left: 6px solid #ffeb3b;
+}
   body {
   
   margin: 0 auto;
   color: gray;
   font-family: 'Roboto', sans-serif;
   text-align: center;
-  background-image:url("https://thecustomizewindows.com/wp-content/uploads/2011/12/Word-Yahtzee-Wallpaper.jpg");
+  background-image:url("https://wallpapercave.com/wp/wp398116.jpg");
   background-color: currentColor;
 }
 h4 {
@@ -93,6 +101,12 @@ p { margin: 1.375rem 0;
   font-family: "Lucida Console", Courier, monospace;
   font-weight: 30;
   font-size: 100;
+}
+mark{
+  font-family: "Lucida Console", Courier, monospace;
+  font-weight: 30;
+  font-size: 50;
+
 }
 form {
   text-align: center;
@@ -125,16 +139,16 @@ form {
 <body>
     <div class="container">
         <div class='text-center'>
-          
-            <h1><mark>WORD GAME</mark>></h1>
-          
+            <h1><mark>WORD GAME</mark></h1>
+            <img src="{{url_for('static', filename='images/pic.png')}}" align="middle" width="100" height="100">
         </div>
+        
         
         <div class="text-center">
           <!--to start - game when pressing button it will display jumbled word-->
           <form name="Form1" class="col-md-6 col-md-offset-3 " onsubmit="get_jumbled_word();return false;" required>
             <button  class="btn btn-primary text-left" type="submit" id="start">
-                    <i  class="glyphicon glyphicon-search"></i>PRESS TO START GAME !
+                    <i  class="glyphicon glyphicon-search"></i>PRESS TO GET JUMBLED WORD !
             </button>
           </form>
         </div>
@@ -147,6 +161,9 @@ form {
         <!-- form to get  user input(answer) -->
         <form name="Form2" class="col-md-6 col-md-offset-3 formfield " onsubmit=" get_user_input();return false;" required>
           <div class="input-group formfield text-left">
+            <div class="warning">
+              <p><strong>NOTE:</strong>Type Possible combination in text box with space between two words. Example: word1 word2 word3 word4</p>
+            </div>
         <textarea type="text" class="text-left"  name="answer" id="answer"cols="30" rows="3" placeholder="Enter your answer"></textarea>
           </div>
           <br>
