@@ -148,7 +148,7 @@ form {
           <!--to start - game when pressing button it will display jumbled word-->
           <form name="Form1" class="col-md-6 col-md-offset-3 " onsubmit="get_jumbled_word();return false;" required>
             <button  class="btn btn-primary text-left" type="submit" id="start">
-                    <i  class="glyphicon glyphicon-search"></i>PRESS TO GET JUMBLED WORD !
+                    <i  class="glyphicon glyphicon-search"></i>PRESS TO START GAME !
             </button>
           </form>
         </div>
@@ -197,6 +197,9 @@ form {
             var answer=$("#answer").val();
             $.getJSON("/api/checker",{"answer":answer},function(result){
             console.log(result)
+            var jumbled =result;
+            $("#jumbled_word").html(jumbled);
+
 
             });
             document.getElementById("answer").value="";
