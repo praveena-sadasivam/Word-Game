@@ -4,4 +4,6 @@
 ![alt text](https://github.com/praveena-sadasivam/Word-Game/blob/word_game_updated/output/output1.png)
 
 ### page-2
-![alt text](https://github.com/praveena-sadasivam/Word-Game/blob/word_game_updated/output/output6.png)
+![alt text](https://github.com/praveena-sadasivam/Word-Game/blob/word_game_updated/output/output2.png)
+
+![alt text](https://github.com/praveena-sadasivam/Word-Game/blob/word_game_updated/output/output3.png)
