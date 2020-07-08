@@ -41,7 +41,7 @@ def handle_404_error(exception):
 def get_random_word():
     rand_num = random.randint(0,len(json_object)-1)
     rand_word=json_object[rand_num]
-    print("getting random word")
+    print("\ngetting random word\n")
     return rand_word
 
 #function to shuffle the target word
@@ -52,7 +52,7 @@ def get_jumbled_word():
    
     # join() method join the elements
     jumbled = ''.join(jubled_word_list)
-    print("getting jumbled word")
+    print("\ngetting jumbled word\n")
     return [jumbled,rand_word]
 
 
@@ -60,7 +60,7 @@ def get_jumbled_word():
 #function to get html page
 @app.route("/")
 def get_html():
-    print("open web page")
+    print("\nopening web page\n")
     return render_template("word_game.html")
 
 #function to send target word to web page 
@@ -71,15 +71,15 @@ def jumbled_word():
     jum_word=words[0]
     random_wrd=words[1]
     correct_word.add(random_wrd)
-    print("jumbled word: ",jum_word)
-    print("random word: ",random_wrd)
-    print("sending a jumbled word to webpage")
+    print("\njumbled word: ",jum_word)
+    print("\nrandom word: ",random_wrd)
+    print("\nsending a jumbled word to webpage")
     return jsonify(jum_word)
 
 #function to check user input
-@app.route("/api/checker",methods=['GET','POST'])
+@app.route("/api/checker",methods=['GET'])
 def check_word():
-    print("checking user input ")
+    print("\nchecking user input\n")
     global score
     answer = request.args.get("answer")
     answer=answer.split(" ")
@@ -87,7 +87,16 @@ def check_word():
         if word in json_object:
             correct_word.add(word)
             score+=1
-    return jsonify(score)
+            print("\nvalid answer !\n")
+    global random_wrd
+    words=get_jumbled_word()
+    jum_word=words[0]
+    random_wrd=words[1]
+    correct_word.add(random_wrd)
+    print("\njumbled word: ",jum_word)
+    print("\nrandom word: ",random_wrd)
+    print("\nsending a jumbled word to webpage\n")
+    return jsonify(jum_word)
 
 #function to return result page
 @app.route("/api/result")
@@ -97,21 +106,32 @@ def result():
 #function to display score
 @app.route("/api/score")
 def get_score():
-    print("score: ",score)
+    print("\nscore: ",score)
     return jsonify(score)
 
 # function to return correct word 
 @app.route("/api/words")
 def get_word():
-    for word in correct_word:
-        meaning[word]=word_meaning(word)
-    return jsonify(meaning)
+    return jsonify(list(correct_word))
 
 #function to display meaning
-def word_meaning(word):
-    syn = word_net.synsets(word)[0]
+@app.route("/api/meaning",methods=['GET'])
+def word_meaning():
+    print("\nword with meaning\n")
+    answer = request.args.get("word")
+    syn = word_net.synsets(answer)[0]
     meaning=syn.definition()
-    return meaning
+    print(answer+': '+meaning+'\n')
+    return jsonify([meaning,answer])
+#function to restart game
+@app.route("/api/restart")
+def restart():
+    global score 
+    score= 0
+    global correct_word
+    correct_word=set()
+    print("\nback to game\n")
+    return render_template("word_game.html")
 
 if __name__ == '__main__':
     app.run(port=3000)
