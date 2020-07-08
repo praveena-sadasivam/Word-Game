@@ -133,9 +133,7 @@ href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
     cursor:pointer;
   }
   .highlightme { background-color:#FFFF00; }
-  span {
-  content: "\2022";
-}
+  
 
   </style>
   <body>
@@ -145,23 +143,23 @@ href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
             <img src="{{url_for('static', filename='images/results.jpg')}}" align="middle" width="100" height="100">
         </div>
             <!-- it will display score onclick -->
-        <form name="Form2" class="col-md-6 col-md-offset-3 formfield " onsubmit=" get_score();return false;" required>
+        <form name="Form2" class="col-md-6 col-md-offset-3 formfield text-left " onsubmit=" get_score();return false;" required>
             <button align="center" class="btn btn-primary" type="submit">
                 <i class="glyphicon glyphicon-search"></i><i class="fa fa-check" aria-hidden="true"></i>SCORE
               </button>
         </form>
         <span class="highlight big" id="score"></span>   
          <!-- it will display correct words  onclick -->
-        <form name="Form2" class="col-md-6 col-md-offset-3 formfield text-left" onsubmit=" get_words();return false;" required>
+        <form name="Form2" class="col-md-6 col-md-offset-3 formfield text-right" onsubmit=" get_words();return false;" required>
             <button align="center" class="btn btn-primary" type="submit">
                 <i class="glyphicon glyphicon-search"></i>WORDS
               </button>
-            </form>
+            </form><br><br>
         <form action="/api/restart"  class="col-md-6 col-md-offset-3 text-right "  required>
               <button  class="btn btn-primary text-left" type="submit" >
                 <i class="glyphicon glyphicon-search" ></i><i class='fas fa-reply'></i>RESTART
               </button>
-            </form>
+            </form><br><br>
         
       
     
@@ -201,7 +199,7 @@ href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
     function get_score(){
       $.getJSON("/api/score",function(result){
         var score =result;
-        $("#score").html(score);
+        $("#score").html('Your Score :'+score);
         console.log(result)
       });
     }
