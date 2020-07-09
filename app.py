@@ -8,6 +8,7 @@ word_dict=dict()
 random_wrd=str()
 correct_word=set()
 score=0
+number_of_question_attend=1
 meaning=dict()
 
 
@@ -79,6 +80,8 @@ def jumbled_word():
 #function to check user input
 @app.route("/api/checker",methods=['GET'])
 def check_word():
+    global number_of_question_attend
+    number_of_question_attend+=1
     print("\nchecking user input\n")
     global score
     answer = request.args.get("answer")
@@ -106,8 +109,9 @@ def result():
 #function to display score
 @app.route("/api/score")
 def get_score():
+    print("\n number of question attend: ",number_of_question_attend)
     print("\nscore: ",score)
-    return jsonify(score)
+    return jsonify([score,number_of_question_attend])
 
 # function to return correct word 
 @app.route("/api/words")
@@ -126,6 +130,8 @@ def word_meaning():
 #function to restart game
 @app.route("/api/restart")
 def restart():
+    global number_of_question_attend
+    number_of_question_attend=1
     global score 
     score= 0
     global correct_word
