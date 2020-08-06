@@ -11,6 +11,6 @@ Image 1                    |  Image 2
 
 
 ### page-2
-![alt text](https://github.com/praveena-sadasivam/Word-Game/blob/word_game_updated/output/output3.png)
-
-![alt text](https://github.com/praveena-sadasivam/Word-Game/blob/word_game_updated/output/output4.png)
+Image 1                    |  Image 2
+:-------------------------:|:-------------------------:
+![alt text](https://github.com/praveena-sadasivam/Word-Game/blob/word_game_updated/output/output3.png) |  ![alt text](https://github.com/praveena-sadasivam/Word-Game/blob/word_game_updated/output/output4.png)
