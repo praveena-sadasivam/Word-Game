@@ -1,10 +1,5 @@
 # Word-Game
 
-<style>
-.hl-table-cell td:hover { /* th:hover also if you wish */
-  background: yellow;
-}
-</style>
 
 <div class="ox-hugo-table hl-table-cell sane-table">
 <div></div>
